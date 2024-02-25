@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const sqlite3 = require("sqlite3").verbose();
 
 const app = express();
-const PORT = 8000;
+const PORT = 8080;
 
 // SQLite 데이터베이스 연결
 const db = new sqlite3.Database("./todos.db");

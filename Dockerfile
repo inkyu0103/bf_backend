@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # 포트 노출
-EXPOSE 8000
+EXPOSE 8080
 
 # 앱 실행
-CMD ["node", "index.js"]
+CMD ["npm", "start"]
