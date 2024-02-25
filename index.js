@@ -69,6 +69,39 @@ app.get("/todos", (req, res) => {
 
 /**
  * @swagger
+ * /todos/{id}:
+ *   get:
+ *     summary: 특정 ToDo 가져오기
+ *     description: 데이터베이스에서 특정 ID에 해당하는 ToDo를 가져옵니다.
+ *     parameters:
+ *       - name: id
+ *         description: 가져올 ToDo의 ID
+ *         in: path
+ *         required: true
+ *         type: integer
+ *     responses:
+ *       200:
+ *         description: 성공적으로 ToDo를 가져왔을 때
+ *       404:
+ *         description: 요청한 ToDo를 찾을 수 없을 때
+ *       500:
+ *         description: 서버에서 오류가 발생했을 때
+ */
+app.get("/todos/:id", (req, res) => {
+  const id = req.params.id;
+  db.get("SELECT * FROM todos WHERE id = ?", [id], (err, row) => {
+    if (err) {
+      res.status(500).send("ToDo를 가져오는 중 오류가 발생했습니다.");
+    } else if (!row) {
+      res.status(404).send("해당 ID의 ToDo를 찾을 수 없습니다.");
+    } else {
+      res.json(row);
+    }
+  });
+});
+
+/**
+ * @swagger
  * /todos:
  *   post:
  *     summary: 새로운 ToDo 추가
